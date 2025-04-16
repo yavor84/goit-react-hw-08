@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const selectNameFilter = state => state.filters.filterName;
-
 const slice = createSlice({
   name: 'filters',
   initialState: {
