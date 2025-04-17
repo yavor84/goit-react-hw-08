@@ -23,7 +23,6 @@ const Contact = ({ data: { id, name, number } }) => {
           <p className={css.name}>{number}</p>
         </div>
       </div>
-
       <button className={css.deleteBtn} onClick={handleDelete}>
         <IoMdCloseCircle size={20} />
       </button>

@@ -15,7 +15,7 @@ const SearchBox = () => {
     <div className={css.searchBox}>
       <div className={css.search}>
         <FaSearch size={18} className={css.icon} />
-        <h2 className={css.title}>Find contacts by name</h2>
+        <h2 className={css.title}>Find contacts by name or number</h2>
       </div>
       <input
         className={css.searchInput}

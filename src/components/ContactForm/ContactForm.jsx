@@ -5,17 +5,19 @@ import css from './ContactForm.module.css';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
 
+const phoneRegExp = /^\+?\d{10,15}$/;
+
 const UserSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Too short!')
+    .min(3, 'Minimum 3 characters')
     .max(50, 'Too long!')
     .required('This field is required!')
     .trim(),
   number: Yup.string()
-    .min(3, 'Phone number is too short!')
-    .max(12, 'Phone number is too long!')
-    .required('Phone number is required!')
-    .matches(/^\d+$/, 'Phone number must contain only digits!')
+    .min(10, 'Enter in the format +380XXXXXXXXX')
+    .max(15, 'Enter in the format +380XXXXXXXXX')
+    .required('This field is required!')
+    .matches(phoneRegExp, 'Enter in the format +380XXXXXXXXX')
     .trim(),
 });
 
@@ -50,7 +52,13 @@ const ContactForm = () => {
           <label className={css.label} htmlFor={numberId}>
             Number
           </label>
-          <Field className={css.input} type="tel" name="number" id={numberId} />
+          <Field
+            className={css.input}
+            type="tel"
+            name="number"
+            id={numberId}
+            placeholder="+380XXXXXXXXX"
+          />
           <ErrorMessage className={css.error} name="number" component="span" />
         </div>
         <button className={css.addBtn} type="submit">

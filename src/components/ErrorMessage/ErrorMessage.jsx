@@ -1,9 +1,7 @@
 import css from './ErrorMessage.module.css';
 
-function ErrorMessage() {
-  return (
-    <div className={css.error}>Action failed. Check your internet connection and try again!</div>
-  );
+function ErrorMessage({ children }) {
+  return <div className={css.error}>{children}</div>;
 }
 
 export default ErrorMessage;

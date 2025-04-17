@@ -24,7 +24,9 @@ function ContactsPage() {
       <ContactForm />
       <SearchBox />
       {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
+      {isError && (
+        <ErrorMessage>Action failed. Check your internet connection and try again</ErrorMessage>
+      )}
       {contacts.length > 0 && <ContactList />}
     </div>
   );
