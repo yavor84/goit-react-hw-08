@@ -34,7 +34,7 @@ function HomePage() {
           }}
         />
 
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h3" component="h1" gutterBottom>
           ContactBook App
         </Typography>
 

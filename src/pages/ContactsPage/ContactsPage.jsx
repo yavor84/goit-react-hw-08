@@ -47,7 +47,7 @@ function ContactsPage() {
 
         <Typography variant="h4" component="h1" gutterBottom={false}>
           {' '}
-          Your contacts,
+          Your contacts,{' '}
           <Box
             component="span"
             sx={theme => ({
