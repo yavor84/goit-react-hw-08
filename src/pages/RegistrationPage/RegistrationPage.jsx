@@ -1,15 +1,24 @@
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import { selectError, selectLoading } from '../../redux/auth/selectors';
+import { clearError } from '../../redux/auth/slice';
+import { useEffect } from 'react';
 
 function RegistrationPage() {
   const isLoading = useSelector(selectLoading);
   const isError = useSelector(selectError);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   return (
     <Box

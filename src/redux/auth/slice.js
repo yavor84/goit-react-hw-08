@@ -14,6 +14,12 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
+  reducers: {
+    // ЦЕ ВАША ФУНКЦІЯ (РЕДЬЮСЕР) clearError
+    clearError(state) {
+      state.error = null; // Встановлюємо error у null при виклику цього action
+    },
+  },
   extraReducers: builder => {
     builder
       // register
@@ -84,5 +90,7 @@ const slice = createSlice({
       });
   },
 });
+
+export const { clearError } = slice.actions;
 
 export default slice.reducer;

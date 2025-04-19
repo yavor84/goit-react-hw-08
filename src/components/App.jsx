@@ -7,6 +7,7 @@ import Layout from './Layout/Layout';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 import { Box, CircularProgress } from '@mui/material';
+import { Toaster } from 'react-hot-toast';
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const RegistrationPage = lazy(() => import('../pages/RegistrationPage/RegistrationPage'));
@@ -45,6 +46,37 @@ export default function App() {
           />
         </Routes>
       </Suspense>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        containerStyle={{
+          marginTop: '12px',
+        }}
+        toastOptions={{
+          duration: 4000,
+
+          success: {
+            style: {
+              background: '#0e7c7b',
+              color: '#fff',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#0e7c7b',
+            },
+          },
+          error: {
+            style: {
+              background: '#8f3985',
+              color: '#fff',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#8f3985',
+            },
+          },
+        }}
+      />
     </Layout>
   );
 }

@@ -1,6 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { selectError, selectLoading } from '../../redux/auth/selectors';
+import { clearError } from '../../redux/auth/slice';
+import { useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,6 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 function LoginPage() {
   const isLoading = useSelector(selectLoading);
   const isError = useSelector(selectError);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   return (
     <Box

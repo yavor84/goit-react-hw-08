@@ -4,6 +4,7 @@ import { logIn } from '../../redux/auth/operations';
 import { useId } from 'react';
 import * as Yup from 'yup';
 import { Button, Box, TextField } from '@mui/material';
+import toast from 'react-hot-toast';
 
 const UserSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email format').required('This field is required!').trim(),
@@ -22,9 +23,12 @@ function LoginForm() {
   const handleSubmit = (values, actions) => {
     dispatch(logIn(values))
       .unwrap()
-      .then(() => {})
+      .then(() => {
+        toast.success('Logged in successfully!');
+      })
       .catch(error => {
         console.error('Login failed:', error);
+        toast.error('Login failed. Check your credentials!');
       })
       .finally(() => {
         actions.setSubmitting(false);

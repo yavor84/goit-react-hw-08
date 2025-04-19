@@ -7,12 +7,21 @@ import Stack from '@mui/material/Stack';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import SmartphoneOutlinedIcon from '@mui/icons-material/SmartphoneOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import toast from 'react-hot-toast';
 
 const Contact = ({ data: { id, name, number } }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContact(id))
+      .unwrap()
+      .then(() => {
+        toast.success('Contact deleted successfully!');
+      })
+      .catch(error => {
+        console.error('Failed to delete contact:', error);
+        toast.error('Failed to delete contact');
+      });
   };
 
   return (

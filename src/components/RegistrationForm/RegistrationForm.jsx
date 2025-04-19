@@ -4,6 +4,7 @@ import { register } from '../../redux/auth/operations';
 import { useId } from 'react';
 import * as Yup from 'yup';
 import { Button, Box, TextField } from '@mui/material';
+import toast from 'react-hot-toast';
 
 const UserSchema = Yup.object().shape({
   name: Yup.string()
@@ -29,9 +30,12 @@ function RegistrationForm() {
   const handleSubmit = (values, actions) => {
     dispatch(register(values))
       .unwrap()
-      .then(() => {})
+      .then(() => {
+        toast.success('Registration in successfully!');
+      })
       .catch(error => {
         console.error('Registration failed:', error);
+        toast.error('Registration failed!');
       })
       .finally(() => {
         actions.setSubmitting(false);

@@ -35,12 +35,11 @@ function HomePage() {
         />
 
         <Typography variant="h4" component="h1" gutterBottom>
-          Welcome to ContactBook!
+          ContactBook App
         </Typography>
 
         <Typography variant="h5" component="p" color="text.secondary">
-          Your personal contact manager app. Store and manage your phone contacts easily and
-          quickly.
+          Your personal contact manager. Store and manage your phone contacts easily and quickly.
         </Typography>
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 3 }} sx={{ mt: 4 }}>

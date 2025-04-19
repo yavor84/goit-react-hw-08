@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
 import { Button, Box, TextField } from '@mui/material';
+import toast from 'react-hot-toast';
 
 const phoneRegExp = /^\+?\d{10,15}$/;
 
@@ -28,9 +29,12 @@ const ContactForm = () => {
   const handleSubmit = (values, actions) => {
     dispatch(addContact(values))
       .unwrap()
-      .then(() => {})
+      .then(() => {
+        toast.success('Contact successfully added!');
+      })
       .catch(error => {
         console.error('Failed to add contact:', error);
+        toast.error('Failed to add contact!');
       })
       .finally(() => {
         actions.setSubmitting(false);

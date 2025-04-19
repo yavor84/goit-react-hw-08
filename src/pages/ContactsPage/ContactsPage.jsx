@@ -10,12 +10,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
+import { selectUser } from '../../redux/auth/selectors';
 
 function ContactsPage() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
   const isError = useSelector(selectError);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -44,7 +46,16 @@ function ContactsPage() {
         />
 
         <Typography variant="h4" component="h1" gutterBottom={false}>
-          Your contacts
+          {' '}
+          Your contacts,
+          <Box
+            component="span"
+            sx={theme => ({
+              color: theme.palette.secondary.main,
+            })}
+          >
+            {user.name}
+          </Box>
         </Typography>
       </Stack>{' '}
       <Stack spacing={3} sx={{ width: '100%', maxWidth: 500 }}>
@@ -66,7 +77,7 @@ function ContactsPage() {
 
         {!isLoading && !isError && contacts.length > 0 && <ContactList />}
         {!isLoading && !isError && contacts.length === 0 && (
-          <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
+          <Typography color="error" sx={{ mt: 2 }}>
             No contacts yet. Add your first contact!
           </Typography>
         )}
