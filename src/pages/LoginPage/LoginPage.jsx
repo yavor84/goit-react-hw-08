@@ -1,19 +1,56 @@
 import { useSelector } from 'react-redux';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { selectError, selectLoading } from '../../redux/auth/selectors';
-import Loader from '../../components/Loader/Loader';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 function LoginPage() {
   const isLoading = useSelector(selectLoading);
   const isError = useSelector(selectError);
+
   return (
-    <div>
-      <h1>LoginPage</h1>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        textAlign: 'center',
+        p: 3,
+        flexGrow: 1,
+      }}
+    >
+      <Stack spacing={2} alignItems="center" sx={{ mb: 3 }}>
+        {' '}
+        <LockOutlinedIcon
+          sx={{
+            fontSize: 100,
+            color: 'secondary.main',
+          }}
+        />
+        <Typography variant="h4" component="h1" gutterBottom={false}>
+          {' '}
+          Log In
+        </Typography>
+      </Stack>{' '}
       <LoginForm />
-      {isLoading && <Loader />}
-      {isError && <ErrorMessage>Incorrect email or password. Please try again</ErrorMessage>}
-    </div>
+      {isLoading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          {' '}
+          <CircularProgress color="primary" size={40} />
+        </Box>
+      )}
+      {isError && (
+        <Typography color="error" sx={{ mt: 2 }}>
+          {' '}
+          Incorrect email or password. Please try again
+        </Typography>
+      )}
+    </Box>
   );
 }
 

@@ -1,8 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { register } from '../../redux/auth/operations';
 import { useId } from 'react';
 import * as Yup from 'yup';
+import { Button, Box, TextField } from '@mui/material';
 
 const UserSchema = Yup.object().shape({
   name: Yup.string()
@@ -22,11 +23,20 @@ function RegistrationForm() {
   const nameId = useId();
   const emailId = useId();
   const passwordId = useId();
+
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(register(values));
-    actions.resetForm();
+    dispatch(register(values))
+      .unwrap()
+      .then(() => {})
+      .catch(error => {
+        console.error('Registration failed:', error);
+      })
+      .finally(() => {
+        actions.setSubmitting(false);
+        actions.resetForm();
+      });
   };
 
   return (
@@ -39,18 +49,77 @@ function RegistrationForm() {
       validationSchema={UserSchema}
       onSubmit={handleSubmit}
     >
-      <Form autoComplete="off">
-        <label htmlFor={nameId}>Username</label>
-        <Field type="text" name="name" id={nameId} />
-        <ErrorMessage name="name" component="span" />
-        <label htmlFor={emailId}>Email</label>
-        <Field type="email" name="email" id={emailId} />
-        <ErrorMessage name="email" component="span" />
-        <label htmlFor={passwordId}>Password</label>
-        <Field type="password" name="password" id={passwordId} />
-        <ErrorMessage name="password" component="span" />
-        <button type="submit">Register</button>
-      </Form>
+      {({ errors, touched, isSubmitting }) => (
+        <Form autoComplete="off">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+
+              minWidth: {
+                xs: 300,
+                sm: 400,
+                md: 550,
+              },
+
+              mx: 'auto',
+              p: 3,
+              border: '1px solid #ccc',
+              borderRadius: 2,
+              bgcolor: 'background.paper',
+              boxShadow: 3,
+            }}
+          >
+            <Field
+              as={TextField}
+              name="name"
+              type="text"
+              label="Username"
+              variant="outlined"
+              fullWidth
+              error={touched.name && !!errors.name}
+              helperText={touched.name && errors.name}
+              id={nameId}
+            />
+
+            <Field
+              as={TextField}
+              name="email"
+              type="email"
+              label="Email"
+              variant="outlined"
+              fullWidth
+              error={touched.email && !!errors.email}
+              helperText={touched.email && errors.email}
+              id={emailId}
+            />
+
+            <Field
+              as={TextField}
+              name="password"
+              type="password"
+              label="Password"
+              variant="outlined"
+              fullWidth
+              error={touched.password && !!errors.password}
+              helperText={touched.password && errors.password}
+              id={passwordId}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Registering...' : 'Sign up'}
+            </Button>
+          </Box>{' '}
+        </Form>
+      )}
     </Formik>
   );
 }

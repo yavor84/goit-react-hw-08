@@ -3,10 +3,10 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { selectIsRefreshing } from '../redux/auth/selectors';
 import { refreshUser } from '../redux/auth/operations';
-import Loader from './Loader/Loader';
 import Layout from './Layout/Layout';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
+import { Box, CircularProgress } from '@mui/material';
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const RegistrationPage = lazy(() => import('../pages/RegistrationPage/RegistrationPage'));
@@ -22,7 +22,10 @@ export default function App() {
   }, [dispatch]);
 
   return isRefreshing ? (
-    <Loader />
+    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 20 }}>
+      {' '}
+      <CircularProgress color="primary" size={40} />
+    </Box>
   ) : (
     <Layout>
       <Suspense fallback={null}>

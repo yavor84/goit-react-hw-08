@@ -1,13 +1,105 @@
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { NavLink } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import MobileScreenShareOutlinedIcon from '@mui/icons-material/MobileScreenShareOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
+
 function HomePage() {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
-    <div>
-      <h1>HomePage</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non iste impedit quasi dolores
-        molestias, neque aliquam quaerat aut, nisi expedita ipsum, nobis incidunt totam illo
-        similique quis. Labore, debitis aspernatur!
-      </p>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        textAlign: 'center',
+        p: 3,
+        flexGrow: 1,
+      }}
+    >
+      <Stack spacing={3} alignItems="center" maxWidth="sm">
+        <MobileScreenShareOutlinedIcon
+          sx={{
+            fontSize: 150,
+            color: 'secondary.main',
+          }}
+        />
+
+        <Typography variant="h4" component="h1" gutterBottom>
+          Welcome to ContactBook!
+        </Typography>
+
+        <Typography variant="h5" component="p" color="text.secondary">
+          Your personal contact manager app. Store and manage your phone contacts easily and
+          quickly.
+        </Typography>
+
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 3 }} sx={{ mt: 4 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
+            <AddCircleOutlineOutlinedIcon color="secondary" sx={{ fontSize: 60, mb: 1 }} />
+            <Typography variant="h6" component="h3" gutterBottom>
+              Add & Store
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Save all your contacts in one secure place.
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
+            <SearchOutlinedIcon color="secondary" sx={{ fontSize: 60, mb: 1 }} />
+            <Typography variant="h6" component="h3" gutterBottom>
+              Find Quickly
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Easily search through your saved contacts.
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
+            <SortOutlinedIcon color="secondary" sx={{ fontSize: 60, mb: 1 }} />
+            <Typography variant="h6" component="h3" gutterBottom>
+              Organize
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Keep your contacts tidy and categorized.
+            </Typography>
+          </Box>
+        </Stack>
+
+        {!isLoggedIn && (
+          <Box sx={{ mt: 6 }}>
+            <Button
+              component={NavLink}
+              to="/login"
+              variant="contained"
+              color="primary"
+              size="large"
+            >
+              Log In
+            </Button>
+            <Button
+              component={NavLink}
+              to="/register"
+              variant="outlined"
+              color="primary"
+              size="large"
+              sx={{ ml: 2 }}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        )}
+      </Stack>
+    </Box>
   );
 }
 

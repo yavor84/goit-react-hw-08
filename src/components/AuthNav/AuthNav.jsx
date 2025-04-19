@@ -1,11 +1,46 @@
 import { NavLink } from 'react-router-dom';
+import { Button, Box } from '@mui/material';
 
 function AuthNav() {
   return (
-    <div>
-      <NavLink to="/register">Register</NavLink>
-      <NavLink to="/login">Log In</NavLink>
-    </div>
+    <Box sx={{ display: 'flex', gap: 2 }}>
+      <Button
+        component={NavLink}
+        to="/register"
+        variant="contained"
+        sx={theme => ({
+          my: 2,
+          display: 'block',
+          textTransform: 'capitalize',
+
+          '&.active': {
+            backgroundColor: theme.palette.secondary.main,
+
+            color: 'white',
+          },
+        })}
+      >
+        Sign Up
+      </Button>
+
+      <Button
+        component={NavLink}
+        to="/login"
+        variant="contained"
+        sx={theme => ({
+          my: 2,
+          display: 'block',
+          textTransform: 'capitalize',
+
+          '&.active': {
+            backgroundColor: theme.palette.secondary.main,
+            color: 'white',
+          },
+        })}
+      >
+        Log In
+      </Button>
+    </Box>
   );
 }
 

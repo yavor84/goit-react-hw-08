@@ -1,9 +1,9 @@
 import { useId } from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import css from './ContactForm.module.css';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
+import { Button, Box, TextField } from '@mui/material';
 
 const phoneRegExp = /^\+?\d{10,15}$/;
 
@@ -25,10 +25,17 @@ const ContactForm = () => {
   const nameId = useId();
   const numberId = useId();
   const dispatch = useDispatch();
-
   const handleSubmit = (values, actions) => {
-    dispatch(addContact(values));
-    actions.resetForm();
+    dispatch(addContact(values))
+      .unwrap()
+      .then(() => {})
+      .catch(error => {
+        console.error('Failed to add contact:', error);
+      })
+      .finally(() => {
+        actions.setSubmitting(false);
+        actions.resetForm();
+      });
   };
 
   return (
@@ -40,31 +47,66 @@ const ContactForm = () => {
       validationSchema={UserSchema}
       onSubmit={handleSubmit}
     >
-      <Form className={css.form}>
-        <div className={css.wrap}>
-          <label className={css.label} htmlFor={nameId}>
-            Name
-          </label>
-          <Field className={css.input} type="text" name="name" id={nameId} />
-          <ErrorMessage className={css.error} name="name" component="span" />
-        </div>
-        <div className={css.wrap}>
-          <label className={css.label} htmlFor={numberId}>
-            Number
-          </label>
-          <Field
-            className={css.input}
-            type="tel"
-            name="number"
-            id={numberId}
-            placeholder="+380XXXXXXXXX"
-          />
-          <ErrorMessage className={css.error} name="number" component="span" />
-        </div>
-        <button className={css.addBtn} type="submit">
-          Add contact
-        </button>
-      </Form>
+      {({ errors, touched, isSubmitting }) => (
+        <Form autoComplete="off">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              minWidth: {
+                xs: 230,
+                sm: 350,
+                md: 400,
+              },
+
+              mx: 'auto',
+              p: 3,
+              border: '1px solid #ccc',
+              borderRadius: 2,
+              bgcolor: 'background.paper',
+              boxShadow: 2,
+            }}
+          >
+            <Field
+              as={TextField}
+              name="name"
+              type="text"
+              label="Name"
+              variant="outlined"
+              fullWidth
+              error={touched.name && !!errors.name}
+              helperText={touched.name && errors.name}
+              id={nameId}
+            />
+
+            <Field
+              as={TextField}
+              name="number"
+              type="tel"
+              label="Number"
+              variant="outlined"
+              fullWidth
+              placeholder="+380XXXXXXXXX"
+              error={touched.number && !!errors.number}
+              helperText={touched.number && errors.number}
+              id={numberId}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+              disabled={isSubmitting}
+              sx={{ mt: 2 }}
+            >
+              {isSubmitting ? 'Adding...' : 'Add contact'}
+            </Button>
+          </Box>{' '}
+        </Form>
+      )}
     </Formik>
   );
 };
